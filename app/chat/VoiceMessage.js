@@ -83,61 +83,71 @@ export default class VoiceMessage extends PureComponent {
   }
 
   render () {
-    const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, leftMessageBackground, rightMessageBackground, voiceRightLoadingColor, voiceLeftLoadingColor } = this.props
+    const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, leftMessageBackground, rightMessageBackground, voiceRightLoadingColor, voiceLeftLoadingColor, isGroup } = this.props
     const { loading } = this.state
     return (
       <View style={[isSelf ? styles.right : styles.left]}>
-        <View
-          style={
-            [
-              styles.triangle,
-              isSelf
-                ? styles.right_triangle
-                : styles.left_triangle,
-              loading ? { borderColor: isSelf ? voiceRightLoadingColor : voiceLeftLoadingColor } : { borderColor: isSelf ? rightMessageBackground : leftMessageBackground }
-            ]}
-        />
-        <View
-          style={{ flexDirection: isSelf ? 'row-reverse' : 'row' }}
-          collapsable={false}
-          ref={(e) => (this[`item_${this.props.rowId}`] = e)}
-        >
-          <TouchableOpacity
-            activeOpacity={0.8}
-            disabled={isOpen}
-            style={
-              [styles.voiceArea,
-                loading
-                  ? {
-                    backgroundColor: isSelf
-                      ? voiceRightLoadingColor
-                      : voiceLeftLoadingColor
-                  }
-                  : {
-                    backgroundColor: isSelf
-                      ? rightMessageBackground
-                      : leftMessageBackground
-                  }
-              ]
-            }
-            onPress={() => {
-              this.props.savePressIndex(this.props.rowId)
-              this.props.onMessagePress('voice', parseInt(this.props.rowId), message.per.content.uri, message)
-            }
-            }
-            onLongPress={() => {
-              this.props.onMessageLongPress(this[`item_${this.props.rowId}`], 'voice', parseInt(this.props.rowId), message.per.content.uri, message)
-            }}
+        {/*<View*/}
+          {/*style={*/}
+            {/*[*/}
+              {/*styles.triangle,*/}
+              {/*isSelf*/}
+                {/*? styles.right_triangle*/}
+                {/*: styles.left_triangle,*/}
+              {/*loading ? { borderColor: isSelf ? voiceRightLoadingColor : voiceLeftLoadingColor } : { borderColor: isSelf ? rightMessageBackground : leftMessageBackground }*/}
+            {/*]}*/}
+        {/*/>*/}
+        <View>
+
+        {
+          !isSelf && isGroup ? <Text style={{height: 20, lineHeight: 20, fontSize: 12, marginVertical: 4}}>{message.per.name}</Text> : <View style={{height: 10,width: 1}} />
+        }
+          <View
+            style={{ flexDirection: isSelf ? 'row-reverse' : 'row' }}
+            collapsable={false}
+            ref={(e) => (this[`item_${this.props.rowId}`] = e)}
           >
-            <View style={[{ width: 40 + (message.per.content.length > 1 ? message.per.content.length * 2 : 0) }, { maxWidth: width - 160 }, { flexDirection: isSelf ? 'row-reverse' : 'row' }
-            ]}>
-              {this._renderIcon()}
+
+            <TouchableOpacity
+              activeOpacity={0.8}
+              disabled={isOpen}
+              style={
+                [styles.voiceArea,
+                  loading
+                    ? {
+                      backgroundColor: isSelf
+                        ? voiceRightLoadingColor
+                        : voiceLeftLoadingColor
+                    }
+                    : {
+                      backgroundColor: isSelf
+                        ? rightMessageBackground
+                        : leftMessageBackground
+                    }
+                ]
+              }
+              onPress={() => {
+                this.props.savePressIndex(this.props.rowId)
+                this.props.onMessagePress('voice', parseInt(this.props.rowId), message.per.content.uri, message)
+              }
+              }
+              onLongPress={() => {
+                this.props.onMessageLongPress(this[`item_${this.props.rowId}`], 'voice', parseInt(this.props.rowId), message.per.content.uri, message)
+              }}
+            >
+
+
+               <View style={[{ width: 40 + (message.per.content.length > 1 ? message.per.content.length * 2 : 0) }, { maxWidth: width - 160 }, { flexDirection: isSelf ? 'row-reverse' : 'row' }
+               ]}>
+                {this._renderIcon()}
+                </View>
+
+            </TouchableOpacity>
+            <View style={{ justifyContent: 'flex-end' }}>
+              <Text style={[{ color: '#aaa', marginBottom: 4 }, isSelf ? { marginRight: 4 } : { marginLeft: 4 }]}>
+                {`${message.per.content.length}"`}
+              </Text>
             </View>
-          </TouchableOpacity>
-          <View style={{ justifyContent: 'flex-end' }}>
-            <Text style={[{ color: '#aaa', marginBottom: 4 }, isSelf ? { marginRight: 4 } : { marginLeft: 4 }]}>
-              {`${message.per.content.length}"`}
-            </Text>
           </View>
         </View>
         <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
