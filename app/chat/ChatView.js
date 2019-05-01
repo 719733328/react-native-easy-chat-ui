@@ -29,6 +29,7 @@ const ViewPropTypes = RNViewPropTypes || View.propTypes
 class ChatWindow extends PureComponent {
   static propTypes = {
     /* defaultProps */
+    onLoaded: PropTypes.func,
     isGroup: PropTypes.bool,
     messageList: PropTypes.object.isRequired,
     onScroll: PropTypes.func,
@@ -138,6 +139,7 @@ class ChatWindow extends PureComponent {
   }
 
   static defaultProps = {
+    onLoaded: () => {},
     isGroup: false,
     renderLoadEarlier: () => (null),
     extraData: null,
@@ -930,6 +932,7 @@ class ChatWindow extends PureComponent {
             onPress={() => this.closeAll()}
             style={[{ flex: 1, backgroundColor: '#f7f7f7' }, this.props.chatWindowStyle]}>
             <FlatList
+
               ref={e => (this.chatList = e)}
               inverted={inverted}
               data={currentList}
@@ -947,10 +950,20 @@ class ChatWindow extends PureComponent {
               onLayout={(e) => {
                 this._scrollToBottom()
                 this.listHeight = e.nativeEvent.layout.height
+
               }}
               onContentSizeChange={(contentWidth, contentHeight) => { this._scrollToBottom({ contentWidth, contentHeight }) }}
               renderItem={({ item, index }) =>
                 <ChatItem
+                    onLoaded={(item) => {
+                      // if(typeof this.loadedIds  === 'undefined') {
+                      //   this.loadedIds = []
+                      // }
+                      console.log("onLayout", item)
+                      // this.loadedIds.push(item)
+                      // // if(this.loadedIds.length === currentList.length)
+                      //   this.props.onLoaded(this.loadedIds)
+                    }}
                   ref={(e) => (this.messageItem = e)}
                   user={this.props.userProfile}
                   reSendMessage={this.props.reSendMessage}

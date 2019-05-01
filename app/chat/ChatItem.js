@@ -105,6 +105,7 @@ export default class ChatItem extends PureComponent {
         if (this.props.renderTextMessage === undefined) {
           return (
             <TextMessage
+                onLoaded={this.props.onLoaded}
               rightMessageBackground={this.props.rightMessageBackground}
               leftMessageBackground={this.props.leftMessageBackground}
               reSendMessage={reSendMessage}
@@ -120,12 +121,13 @@ export default class ChatItem extends PureComponent {
             />
           )
         } else {
-          return this.props.renderTextMessage({ isOpen, isGroup, isSelf, message, views: this._getActualText(message.per.content), index: parseInt(rowId) })
+          return this.props.renderTextMessage({ isOpen, isGroup, isSelf, message, views: this._getActualText(message.per.content), index: parseInt(rowId), onLoaded: this.props.onLoaded })
         }
       case 'image':
         if (this.props.renderImageMessage === undefined) {
           return (
             <ImageMessage
+                onLoaded={this.props.onLoaded}
               rightMessageBackground={this.props.rightMessageBackground}
               leftMessageBackground={this.props.leftMessageBackground}
               reSendMessage={reSendMessage}
@@ -140,12 +142,13 @@ export default class ChatItem extends PureComponent {
             />
           )
         } else {
-          return this.props.renderImageMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId) })
+          return this.props.renderImageMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId), onLoaded: this.props.onLoaded })
         }
       case 'voice':
         if (this.props.renderVoiceMessage === undefined) {
           return (
             <VoiceMessage
+                onLoaded={this.props.onLoaded}
               reSendMessage={reSendMessage}
               loading={loading}
               rightMessageBackground={this.props.rightMessageBackground}
@@ -169,25 +172,25 @@ export default class ChatItem extends PureComponent {
             />
           )
         } else {
-          return this.props.renderVoiceMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId) })
+          return this.props.renderVoiceMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId), onLoaded: this.props.onLoaded })
         }
       case 'video' :
         if (this.props.renderVideoMessage === undefined) {
           return null
         } else {
-          return this.props.renderVideoMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId) })
+          return this.props.renderVideoMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId), onLoaded: this.props.onLoaded })
         }
       case 'location':
         if (this.props.renderLocationMessage === undefined) {
           return null
         } else {
-          return this.props.renderLocationMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId) })
+          return this.props.renderLocationMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId), onLoaded: this.props.onLoaded })
         }
       case 'share':
         if (this.props.renderShareMessage === undefined) {
           return null
         } else {
-          return this.props.renderShareMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId) })
+          return this.props.renderShareMessage({ isOpen, isGroup, isSelf, message, index: parseInt(rowId), onLoaded: this.props.onLoaded })
         }
     }
   }

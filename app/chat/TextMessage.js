@@ -16,7 +16,7 @@ const PATTERNS = {
 export default class TextMessage extends PureComponent {
 
   render () {
-    const { isSelf, message, messageErrorIcon, views, isOpen, rightMessageBackground, leftMessageBackground, reSendMessage, isGroup } = this.props
+    const { isSelf, message, messageErrorIcon, views, isOpen, rightMessageBackground, leftMessageBackground, reSendMessage, isGroup, onLoaded } = this.props
 
 
     console.log("内部message", message)
@@ -25,6 +25,9 @@ export default class TextMessage extends PureComponent {
         style={[isSelf ? styles.right : styles.left]}
         collapsable={false}
         ref={(e) => (this[`item_${this.props.rowId}`] = e)}
+        onLayout={() => {
+          onLoaded(message)
+        }}
       >
         {/*<View*/}
           {/*style={*/}

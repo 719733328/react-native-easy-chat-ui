@@ -83,10 +83,12 @@ export default class VoiceMessage extends PureComponent {
   }
 
   render () {
-    const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, leftMessageBackground, rightMessageBackground, voiceRightLoadingColor, voiceLeftLoadingColor, isGroup } = this.props
+    const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, leftMessageBackground, rightMessageBackground, voiceRightLoadingColor, voiceLeftLoadingColor, isGroup, onLoaded } = this.props
     const { loading } = this.state
     return (
-      <View style={[isSelf ? styles.right : styles.left]}>
+      <View style={[isSelf ? styles.right : styles.left]}  onLayout={() => {
+        onLoaded(message)
+      }}>
         {/*<View*/}
           {/*style={*/}
             {/*[*/}

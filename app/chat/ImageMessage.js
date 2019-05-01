@@ -6,9 +6,11 @@ import {
 } from 'react-native'
 export default class ImageMessage extends PureComponent {
   render () {
-    const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, isGroup } = this.props
+    const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, isGroup, onLoaded } = this.props
     return (
-      <View style={[isSelf ? styles.right : styles.left]}>
+      <View style={[isSelf ? styles.right : styles.left]}   onLayout={() => {
+          onLoaded(message)
+      }}>
 
               <TouchableOpacity
                   ref={e => (this[`item_${this.props.rowId}`] = e)}
