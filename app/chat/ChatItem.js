@@ -250,7 +250,10 @@ export default class ChatItem extends PureComponent {
                   source={isSelf ? user.avatar : message.chatInfo.avatar}
                   style={[styles.avatar, avatarStyle]} />
               </TouchableOpacity>
-              {this._renderContent(isSelf, isGroup)}
+              <View style={{alignItems: 'flex-end'}}>
+                {this._renderContent(isSelf, isGroup)}
+                <Text style={{fontSize: 12}}>{isSelf ? (message.received ? "已读": '未读') : null}</Text>
+              </View>
               {
                 isSelf && isOpen &&
                   <View

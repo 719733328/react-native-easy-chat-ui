@@ -913,6 +913,9 @@ class ChatWindow extends PureComponent {
         ? (b.time - a.time)
         : (a.time - b.time))
       : []
+
+
+    const unReceivedMessageLength = currentList.filter(item => item.received === 0).length
     return (
       <View style={{ backgroundColor: this.props.containerBackgroundColor, flex: 1 }}>
         <Animated.View style={Platform.OS === 'android' ? { flex: 1 } : {
@@ -932,7 +935,6 @@ class ChatWindow extends PureComponent {
             onPress={() => this.closeAll()}
             style={[{ flex: 1, backgroundColor: '#f7f7f7' }, this.props.chatWindowStyle]}>
             <FlatList
-
               ref={e => (this.chatList = e)}
               inverted={inverted}
               data={currentList}
@@ -959,10 +961,17 @@ class ChatWindow extends PureComponent {
                       // if(typeof this.loadedIds  === 'undefined') {
                       //   this.loadedIds = []
                       // }
-                      console.log("onLayout", item)
-                      // this.loadedIds.push(item)
-                      // // if(this.loadedIds.length === currentList.length)
+                      // console.log("========================================")
+                      // console.log("onLayout", item,unReceivedMessageLength,  currentList)
+                      if(item.received === 0)
+                        this.props.onLoaded(item)
+
+                      // if(this.loadedIds.length === unReceivedMessageLength) {
+                      //   console.log("loadedIds", this.loadedIds)
                       //   this.props.onLoaded(this.loadedIds)
+                      // }
+                      // console.log("========================================")
+
                     }}
                   ref={(e) => (this.messageItem = e)}
                   user={this.props.userProfile}
