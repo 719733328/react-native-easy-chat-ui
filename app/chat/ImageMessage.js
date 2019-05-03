@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     Image, StyleSheet, ActivityIndicator, Text
 } from 'react-native'
+
 export default class ImageMessage extends PureComponent {
   render () {
     const { message, messageErrorIcon, isSelf, isOpen, reSendMessage, isGroup, onLoaded } = this.props
